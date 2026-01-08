@@ -1,0 +1,44 @@
+Link:
+    <!-- Bootstrap, el paquete local -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Estilos del sitio -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AppCooperativaAhorro.styles.css" asp-append-version="true" />
+
+Layout general
+Navbar: navbar navbar-expand-lg navbar-dark bg-primary shadow-sm
+Footer: border-top bg-white mt-auto py-3 text-center text-muted small
+Alertas con alert alert-* y botón “volver arriba”.
+
+Títulos
+<h1 class="text-center text-primary fw-bold mb-4">...</h1>
+
+Botones
+Verde btn btn-success
+Azul btn btn-primary
+Gris btn btn-outline-secondary
+Rojo btn btn-danger
+Tamaños y espacio: btn-sm, px-4, me-3, gap-4
+
+Tablas
+table table-striped table-hover table-bordered align-middle shadow-sm bg-white
+Cabecera azul thead class="table-primary"
+Responsive div.table-responsive
+
+Formularios
+Contenedor centrado row justify-content-center + col-md-6 col-lg-5
+Formulario form class="p-4 border rounded shadow-sm bg-white"
+Campos form-label fw-semibold, form-control, mb-3
+Botones dentro d-flex justify-content-between mt-3
+
+Cards (Details / Delete)
+card shadow-sm mb-4
+card-header bg-light fw-semibold
+card-body con <dl class="row mb-0">
+
+Utilidades comunes
+Márgenes y padding mb-3, mb-4, mt-4, p-4
+Alineación text-center, text-end, justify-content-center
+Colores text-primary, text-danger, text-muted, bg-light, bg-white
+Sombra y bordes shadow-sm, border, rounded

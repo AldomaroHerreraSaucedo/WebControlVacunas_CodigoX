@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36518.9 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebControlVacunas_CodigoX", "WebControlVacunas_CodigoX\WebControlVacunas_CodigoX.csproj", "{90FF6803-8CA4-4F0E-B1CB-BA0E68A5F49D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{90FF6803-8CA4-4F0E-B1CB-BA0E68A5F49D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90FF6803-8CA4-4F0E-B1CB-BA0E68A5F49D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90FF6803-8CA4-4F0E-B1CB-BA0E68A5F49D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90FF6803-8CA4-4F0E-B1CB-BA0E68A5F49D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F02F846C-97DE-47DA-898F-0CC3D22C7525}
+	EndGlobalSection
+EndGlobal

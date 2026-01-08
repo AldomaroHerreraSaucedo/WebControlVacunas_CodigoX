@@ -1,0 +1,266 @@
+1. IDE visual Studio
+2. Paquete de NuGets
+4. SQL
+3. IDE MSSM
+4. Librerías de Fortawesome
+
+
+1. Código de CooperativasContex
+public class CooperativasContext : DbContext
+{
+    public CooperativasContext(DbContextOptions<CooperativasContext> options)
+       : base(options) { }
+
+    public DbSet<Cliente> Clientes { get; set; }
+    public DbSet<CuentaAhorro> Cuentas { get; set; }
+    public DbSet<Operacion> Operaciones { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Cliente>().ToTable("Cliente");
+        modelBuilder.Entity<CuentaAhorro>().ToTable("CuentaAhorro");
+        modelBuilder.Entity<Operacion>().ToTable("Operacion");
+        base.OnModelCreating(modelBuilder);
+    }
+}
+
+3. Para poblar BDIniciliza
+ public class BDIniciliza
+ {
+     public static void Inicializar(BDContext context)
+     {
+         // Registros de Administrador
+         if (context.Administradores.Any())
+         {
+             return;
+         }
+         var administrador = new Administrador[]
+         {
+             new Administrador { Apellidos = "Malpica Rodriguez", Nombres = "Manuel", Correo = "adminLabCheck@unc.edu.pe", Contrasenia = "12345678" },
+         };
+         context.Administradores.AddRange(administrador);
+         context.SaveChanges();
+
+
+
+2. Código acceder a MSSM: (localdb)\MSSQLLocalDB
+	"ConnectionStrings": {
+  "CooperativasContext": "Server=(localdb)\\mssqllocaldb;Database=BDCooperativas;Trusted_Connection=True;MultipleActiveResultSets=true"
+}
+
+
+3. Código de Program.cs
+	
+// Sesiones
+builder.Services.AddSession();
+
+// Para DB
+builder.Services.AddDbContext<CooperativasContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("CooperativasContext") ?? throw new InvalidOperationException("Base de datos no encontrada.")));
+
+// Inyección de dependencias para el servicio
+builder.Services.AddSingleton<Servicio>();
+
+// Para migrar
+else
+{
+    app.UseDeveloperExceptionPage();
+    app.UseMigrationsEndPoint();
+}
+
+// Para DB
+using (var inicio = app.Services.CreateScope())
+{
+    var servicio = inicio.ServiceProvider;
+    var contexto = servicio.GetRequiredService<CooperativasContext>();
+    contexto.Database.EnsureCreated();
+}
+
+
+// Sesiones
+app.UseSession();
+
+
+
+4. Comentar la línea de código con doble click en el proyecto
+    <!--<Nullable>enable</Nullable>-->
+
+
+5. Relaciones
+modelBuilder.Entity<Laboratorio>().HasMany(l => l.DetallesHorarios).WithOne(dh => dh.Laboratorio).HasForeignKey(dh => dh.LaboratorioId);
+
+modelBuilder.Entity<DocenteCurso>().ToTable("DocenteCurso").
+                HasKey(c => new { c.CursoId, c.DocenteId });
+
+
+6. Como hacer select
+ <div class="form-group">
+     <label asp-for="TipoOperacion" class="control-label"></label>
+     <select asp-for="TipoOperacion" class="form-control" asp-items="ViewBag.TipoOperacion"></select>
+     <span asp-validation-for="TipoOperacion" class="text-danger"></span>
+ </div>
+
+ViewData["TipoOperacion"] = new List<SelectListItem>
+{
+    new SelectListItem { Value = "", Text = "Seleccionar tipo", Selected = true }
+}
+.Concat(Enum.GetValues(typeof(TipoOperacion))
+    .Cast<TipoOperacion>()
+    .Select(e => new SelectListItem
+    {
+        Value = ((int)e).ToString(),
+        Text = e.ToString()
+    })).ToList();
+
+
+
+7. Carpeta Accesos
+Inicio.cshtml
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Inicio";
+    Layout = "~/Views/Shared/_LayoutAcceso.cshtml";
+}
+
+<body class="m-0 p-0 overflow-hidden">
+    <div class="d-flex justify-content-center align-items-center vh-100 position-relative">
+        <div class="text-center">
+
+            <h1 class="display-3 fw-bold text-success sombra">COOPERATIVA DE AHORRO</h1>
+
+            <div class="row justify-content-center mt-5">
+                <div>
+                    <a asp-controller="Accesos" asp-action="LoginAdministrador" class="btn btn-danger d-block mb-3">
+                        <i class="fa-solid fa-user"></i>&nbsp;Administrador
+                    </a>
+                    <a asp-controller="Accesos" asp-action="LoginCliente" class="btn btn-primary d-block mb-3">
+                        <i class="fa-solid fa-chalkboard-user"></i>&nbsp;Cliente
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+LoginAdministrador.cshtml
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "LoginAdministrador";
+    Layout = "~/Views/Shared/_LayoutAdministrador.cshtml";
+}
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "LoginCliente";
+    Layout = "~/Views/Shared/_LayoutAcceso.cshtml";
+}
+
+LoginAdministrador.cshtml
+<body>
+    <div class="container vh-100">
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <div class="tarjeta_usuario p-5" style="width: 22rem;">
+
+                <h1 class="fw-bold text-center">Clientes</h1>
+
+                <form asp-controller="Accesos" asp-action="LoginCliente" method="post">
+                    <div class="input-group mt-4">
+                        <input type="email" name="Correo" value="juanp@unc.edu.pe" class="form-control" placeholder="Correo Estudiante" autofocus>
+                    </div>
+                    <div class="input-group mt-3">
+                        <input type="password" name="Contrasenia" value="12345678" class="form-control" placeholder="Contraseña">
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary w-50 mb-2">Iniciar Sesión</button>
+                        <a asp-controller="Accesos" asp-action="Inicio" class="btn btn-danger w-50">Regresar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+@if (ViewBag.Mensaje != null)
+{
+    <script>
+        alert("@ViewBag.Mensaje");
+    </script>
+}
+
+
+
+8. Notificaciones:
+public class ComputadorasController : Controller
+{
+    private readonly BDContext _context;
+    private readonly IConfiguration _configuration;
+    private readonly INotyfService _serviceNotification;
+
+    public ComputadorasController(BDContext context, IConfiguration configuration, INotyfService oNotification)
+    {
+        _context = context;
+        _configuration = configuration;
+        _serviceNotification = oNotification;
+    }
+
+en cada método, también .error
+ _serviceNotification.Information("Se creó una nueva computadora");
+
+
+Program.cs
+
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 5;         // duración por defecto
+    config.IsDismissable = true;          // se puede cerrar
+    config.Position = NotyfPosition.TopRight; // posición
+});
+
+app.UseNotyf();        
+
+
+_Layout
+   @* Agregamos mensaje *@
+   @await Component.InvokeAsync("Notyf");
+</body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
