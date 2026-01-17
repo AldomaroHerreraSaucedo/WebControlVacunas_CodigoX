@@ -1,48 +1,46 @@
 ﻿@model WebControlVacunas_CodigoX.Models.Nino
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalle del Niño";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
 
-<div>
-    <h4>Nino</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Apellidos)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Apellidos)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nombres)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nombres)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Dni)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Dni)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaNacimiento)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaNacimiento)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Genero)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genero)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Detalle del Niño</h4>
+        </div>
+
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-4">Apellidos</dt>
+                <dd class="col-sm-8">@Model.Apellidos</dd>
+
+                <dt class="col-sm-4">Nombres</dt>
+                <dd class="col-sm-8">@Model.Nombres</dd>
+
+                <dt class="col-sm-4">DNI</dt>
+                <dd class="col-sm-8">@Model.Dni</dd>
+
+                <dt class="col-sm-4">Fecha de Nacimiento</dt>
+                <dd class="col-sm-8">
+                    @Model.FechaNacimiento.ToString("dd/MM/yyyy")
+                </dd>
+
+                <dt class="col-sm-4">Género</dt>
+                <dd class="col-sm-8">@Model.Genero</dd>
+            </dl>
+        </div>
+
+        <div class="card-footer text-end">
+            <a asp-action="Edit" asp-route-id="@Model.Id"
+               class="btn btn-warning me-2">
+                Editar
+            </a>
+            <a asp-action="Index"
+               class="btn btn-secondary">
+                Volver
+            </a>
+        </div>
+    </div>
 </div>
